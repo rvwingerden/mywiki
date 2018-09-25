@@ -1,0 +1,8 @@
+<!-- TITLE: Git -->
+<!-- SUBTITLE: Distributed version control -->
+
+# Commando's
+`git pull origin master`
+git pull origin master will pull changes from the origin remote, master branch and merge them to the local checked-out branch.
+
+git pull origin/master will pull changes from the locally stored branch origin/master and merge that to the local checked-out branch. The origin/master branch is essentially a "cached copy" of what was last pulled from origin, which is why it's called a remote branch in git parlance. This might be somewhat confusing.
