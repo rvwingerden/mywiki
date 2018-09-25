@@ -1,4 +1,4 @@
 <!-- TITLE: Home -->
-<!-- SUBTITLE: A quick summary of Home -->
+<!-- SUBTITLE: A repository full of knowledge for the weak of mind ;-) -->
 
 # Header
