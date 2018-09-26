@@ -4,20 +4,21 @@
 # Reverse Proxy Server
 Een webapplicatie luistert op een bepaalde poort. Wanneer meerdere applicaties op dezelfde poort zitten, dan gebruik je een reversed proxy om het onderscheid te maken. (bijv. luisteren naar poort 80)
 
+Hieronder een voorbeeld om bijv. wiki.js door te lussen van poort 80 naar 3000; wiki.js draait lokaal en luistert op poort 3000, we zetten nginx in om via poort 80 gewoon door te lussen naar 3000;
+
 ```yaml
-http {
-    proxy_cache_path  /data/nginx/cache  levels=1:2    keys_zone=STATIC:10m
-    inactive=24h  max_size=1g;
-    server {
-        location / {
-            proxy_pass             http://1.2.3.4;
-            proxy_set_header       Host $host;
-            proxy_buffering        on;
-            proxy_cache            STATIC;
-            proxy_cache_valid      200  1d;
-            proxy_cache_use_stale  error timeout invalid_header updating
-                                   http_500 http_502 http_503 http_504;
-        }
+server {
+    listen 80;
+    listen [::]:80;
+    server_name  wiki.example.com;
+    location / {
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://127.0.0.1:3001;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_next_upstream error timeout http_502 http_503 http_504;
     }
 }
 ```
